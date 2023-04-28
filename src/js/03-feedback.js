@@ -38,7 +38,7 @@ function onFeedbackSubmit(evt) {
   evt.preventDefault();
   evt.target.reset();
 
-  saveToStorage(FEEDBACK_FORM_STORAGE_KEY, '');
+  localStorage.removeItem(FEEDBACK_FORM_STORAGE_KEY);
 
   console.log(feedbackFormData);
 }
