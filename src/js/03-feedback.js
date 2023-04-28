@@ -4,6 +4,7 @@ const feedbackFormEl = document.querySelector('.feedback-form');
 
 feedbackFormEl.addEventListener('input', throttle(updateFormInStorage, 500));
 feedbackFormEl.addEventListener('submit', onFeedbackSubmit);
+
 window.addEventListener('DOMContentLoaded', updateFormFromStorage);
 
 const feedbackFormData = {
@@ -14,7 +15,8 @@ const feedbackFormData = {
 const FEEDBACK_FORM_STORAGE_KEY = 'feedback-form-state';
 
 function updateFormInStorage(evt) {
-  feedbackFormData[evt.target.name] = evt.target.value;
+  const target = evt.target;
+  feedbackFormData[target.name] = target.value;
   saveToStorage(FEEDBACK_FORM_STORAGE_KEY, feedbackFormData);
 }
 
@@ -35,7 +37,9 @@ function updateFormFromStorage() {
 function onFeedbackSubmit(evt) {
   evt.preventDefault();
   evt.target.reset();
+
   saveToStorage(FEEDBACK_FORM_STORAGE_KEY, '');
+
   console.log(feedbackFormData);
 }
 
@@ -52,9 +56,11 @@ function loadFromStorage(key) {
   try {
     const value = localStorage.getItem(key);
     const obj = JSON.parse(value);
+
     return obj === null ? undefined : obj;
   } catch (err) {
     console.error(err.message);
+
     return undefined;
   }
 }
